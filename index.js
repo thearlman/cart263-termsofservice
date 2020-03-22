@@ -27,7 +27,6 @@ app.use(bodyParser.raw({
   limit: '10mb'
 }));
 
-console.log("STARTEDDDDD");
 
 httpServer.listen(portNumber, function() {
   console.log(`HTTPS server is running on port ${portNumber}`);
@@ -38,7 +37,7 @@ let io = require('socket.io')(httpServer);
 io.on('connect', function(socket) {
   io.emit("handshake", "SERVER: Server is present");
 })
-//tetsingGitgnoreAganiagain`
+
 
 app.post('/datain', function(req, res) {
   // io.emit("datain", req.body);
@@ -50,11 +49,6 @@ app.post('/datain', function(req, res) {
 })
 
 app.get('/requestData', dataDump);
-app.get('/getTest', getTestFunction);
-
-function getTestFunction(req, res){
-    res.send("hello from serverzzz");
-  }
 
 let tempUser = {
   "user_number": 0,
@@ -68,7 +62,7 @@ let tempUser = {
 //takes both the data, and the type of data
 let dataCounter = 0;
 
-function storeUsers(req, res) {
+function storeUsers() {
   fs.readFile('userIndex.json', function(err, data) {
     if (err) throw err;
     //parse the json
@@ -134,8 +128,7 @@ function storeUsers(req, res) {
               images: {}
             }
             dataCounter = 0;
-            res.send("files Unzipped")
-            // io.emit("newData", "dataya");
+            io.emit("newData", "dataya");
           })
         }
       })

@@ -10,7 +10,8 @@ window.onload = function(){
   // clientSocket.on("newData", function(message){
   //   refreshImages();
   // });
-  refreshImages();
+  // refreshImages();
+  console.log("running");
 }
 
 // $.ajax({
