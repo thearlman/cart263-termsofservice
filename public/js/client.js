@@ -1,22 +1,21 @@
 window.onload = function(){
-  // let clientSocket = io();
-  // clientSocket.on("handshake", function(message){
-  //   console.log(message);
-  // })
-  // clientSocket.on("datain", function(data){
-  //   console.log(data);
-  //   $("#kioskMessages").append(data);
-  // })
-  // clientSocket.on("newData", function(message){
-  //   refreshImages();
-  // });
+  let clientSocket = io();
+  clientSocket.on("handshake", function(message){
+    console.log(message);
+  })
+  clientSocket.on("datain", function(data){
+    console.log(data);
+    $("#kioskMessages").append(data);
+  })
+  clientSocket.on("newData", function(message){
+    refreshImages();
+  });
   refreshImages();
   console.log("running");
 }
 
 
 function refreshImages(){
-  console.log("running");
   $.ajax({
     type:"GET",
     url:"/requestData",
