@@ -38,6 +38,7 @@ function refreshImages(){
     }
   })
 }
+//tetsgitignore
 
 function dumpImages(data){
   $('#kioskMessages').html("")
