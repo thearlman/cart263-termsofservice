@@ -27,6 +27,7 @@ app.use(bodyParser.raw({
   limit: '10mb'
 }));
 
+console.log("STARTEDDDDD");
 
 httpServer.listen(portNumber, function() {
   console.log(`HTTPS server is running on port ${portNumber}`);
