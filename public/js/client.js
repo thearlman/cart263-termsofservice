@@ -10,20 +10,10 @@ window.onload = function(){
   // clientSocket.on("newData", function(message){
   //   refreshImages();
   // });
-  // refreshImages();
+  refreshImages();
   console.log("running");
 }
 
-// $.ajax({
-//   type: "GET",
-//   url: "/getTest",
-//   success: (data)=>{
-//     console.log(data);
-//   },
-//   error: (err)=>{
-//     console.log(err);
-//   }
-// })
 
 function refreshImages(){
   console.log("running");

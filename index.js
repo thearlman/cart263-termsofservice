@@ -135,29 +135,29 @@ function storeUsers() {
   })
 }
 
-// function dataDump(req, res) {
-//   let images = {
-//     "mouths":[],
-//     "leftEyes": [],
-//     "rightEyes": [],
-//     "noses": [],
-//     "rightEyebrows": [],
-//     "leftEyebrows": []
-//   };
-//   fs.readFile('userIndex.json', function(err, data) {
-//     if (err) throw err;
-//     uIndex = JSON.parse(data);
-//     for (let i = 0; i < uIndex.users.length; i++){
-//       images.mouths.push(base64Encode(uIndex.users[i].images.mouth));
-//       images.leftEyes.push(base64Encode(uIndex.users[i].images.leftEye));
-//       images.rightEyes.push(base64Encode(uIndex.users[i].images.rightEye));
-//       images.noses.push(base64Encode(uIndex.users[i].images.nose));
-//       images.rightEyebrows.push(base64Encode(uIndex.users[i].images.rightEyebrow));
-//       images.leftEyebrows.push(base64Encode(uIndex.users[i].images.leftEyebrow));
-//     }
-//     res.send(images);
-//   })
-// }
+function dataDump(req, res) {
+  let images = {
+    "mouths":[],
+    "leftEyes": [],
+    "rightEyes": [],
+    "noses": [],
+    "rightEyebrows": [],
+    "leftEyebrows": []
+  };
+  fs.readFile('userIndex.json', function(err, data) {
+    if (err) throw err;
+    uIndex = JSON.parse(data);
+    for (let i = 0; i < uIndex.users.length; i++){
+      images.mouths.push(base64Encode(uIndex.users[i].images.mouth));
+      images.leftEyes.push(base64Encode(uIndex.users[i].images.leftEye));
+      images.rightEyes.push(base64Encode(uIndex.users[i].images.rightEye));
+      images.noses.push(base64Encode(uIndex.users[i].images.nose));
+      images.rightEyebrows.push(base64Encode(uIndex.users[i].images.rightEyebrow));
+      images.leftEyebrows.push(base64Encode(uIndex.users[i].images.leftEyebrow));
+    }
+    res.send(images);
+  })
+}
 
 function base64Encode(url) {
   // read binary data
@@ -165,34 +165,34 @@ function base64Encode(url) {
   // convert binary data to base64 encoded string
   return new Buffer(bitmap).toString('base64');
 }
-
-function dataDump(req, res) {
-  let compressedData = {
-    rekData: [],
-    claData: []
-  };
-  let uIndex;
-  fs.readFile('userIndex.json', function(err, indexData) {
-    if (err) throw err;
-    uIndex = JSON.parse(indexData);
-    for (let i = 0; i < uIndex.users.length; i++) {
-      fs.readFile(uIndex.users[i].rekData, function(err, rekData) {
-        if (err) throw err;
-        // console.log(JSON.parse(rekData));
-        compressedData.rekData.push(JSON.parse(rekData));
-        fs.readFile(uIndex.users[i].claData, function(err, claData) {
-          if (err) throw err;
-          compressedData.claData.push(JSON.parse(claData));
-          if (compressedData.rekData.length === uIndex.users.length &&
-            compressedData.claData.length === uIndex.users.length) {
-            res.send(compressedData);
-            console.log("sent!");
-          }
-        })
-      })
-    }
-  })
-}
+// 
+// function dataDump(req, res) {
+//   let compressedData = {
+//     rekData: [],
+//     claData: []
+//   };
+//   let uIndex;
+//   fs.readFile('userIndex.json', function(err, indexData) {
+//     if (err) throw err;
+//     uIndex = JSON.parse(indexData);
+//     for (let i = 0; i < uIndex.users.length; i++) {
+//       fs.readFile(uIndex.users[i].rekData, function(err, rekData) {
+//         if (err) throw err;
+//         // console.log(JSON.parse(rekData));
+//         compressedData.rekData.push(JSON.parse(rekData));
+//         fs.readFile(uIndex.users[i].claData, function(err, claData) {
+//           if (err) throw err;
+//           compressedData.claData.push(JSON.parse(claData));
+//           if (compressedData.rekData.length === uIndex.users.length &&
+//             compressedData.claData.length === uIndex.users.length) {
+//             res.send(compressedData);
+//             console.log("sent!");
+//           }
+//         })
+//       })
+//     }
+//   })
+// }
 
 
 //base64 function: https://stackoverflow.com/questions/24523532/how-do-i-convert-an-image-to-a-base64-encoded-data-url-in-sails-js-or-generally
