@@ -1,0 +1,5 @@
+/node_modules/
+/userData/
+/userImages/
+/*.json/
+/*.zip/
