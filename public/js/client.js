@@ -11,9 +11,6 @@ let featureObjects = {
   mouths: []
 }
 
-
-
-
 window.onload = function() {
   let clientSocket = io();
   clientSocket.on("handshake", function(message) {
