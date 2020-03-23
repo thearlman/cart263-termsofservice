@@ -70,7 +70,7 @@ function createImageObjects() {
 function draw() {
   c.clearRect(0, 0, window.innerWidth, window.innerHeight)
   updateImageLocations();
-  animate = window.requestAnimationFrame(draw);
+  // animate = window.requestAnimationFrame(draw);
 }
 
 function updateImageLocations() {
