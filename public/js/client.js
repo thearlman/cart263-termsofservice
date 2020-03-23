@@ -33,6 +33,7 @@ window.onload = function() {
 }
 
 $(document).on("click", makeFace);
+$(document).on("touchend", makeFace);
 
 function refreshImages() {
   $.ajax({
