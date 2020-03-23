@@ -76,8 +76,8 @@ function storeUsers() {
       .on('entry', function(entry) {
         switch (entry.path) {
           case "faceDetails/rekData.json":
-            entry.pipe(fs.createWriteStream(`userData/rekData${uIndex.users.length}.json`));
-            tempUser.rekData = `userData/rekData${uIndex.users.length}.json`
+            entry.pipe(fs.createWriteStream(`userData/rekData_${uIndex.users.length}.json`));
+            tempUser.rekData = `userData/rekData_${uIndex.users.length}.json`
             dataCounter++
             break;
           case "faceDetails/claData.json":
@@ -165,7 +165,7 @@ function base64Encode(url) {
   // convert binary data to base64 encoded string
   return new Buffer(bitmap).toString('base64');
 }
-// 
+//
 // function dataDump(req, res) {
 //   let compressedData = {
 //     rekData: [],
