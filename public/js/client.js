@@ -91,19 +91,19 @@ function makeFace() {
   let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length))];
   $("#leftEyebrow").html(`<img src= "data:image/png;base64,${leftEyebrow.base64}" alt=""/>`);
 
-  let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length - 1))];
+  let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length))];
   $("#rightEyebrow").html(`<img src= "data:image/png;base64,${rightEyebrow.base64}" alt=""/>`);
 
-  let leftEye = featureObjects.leftEyes[Math.floor(Math.random() * (featureObjects.leftEyes.length - 1))];
+  let leftEye = featureObjects.leftEyes[Math.floor(Math.random() * (featureObjects.leftEyes.length))];
   $("#leftEye").html(`<img src= "data:image/png;base64,${leftEye.base64}" alt=""/>`);
 
-  let rightEye = featureObjects.rightEyes[Math.floor(Math.random() * (featureObjects.rightEyes.length - 1))];
+  let rightEye = featureObjects.rightEyes[Math.floor(Math.random() * (featureObjects.rightEyes.length))];
   $("#rightEye").html(`<img src= "data:image/png;base64,${rightEye.base64}" alt=""/>`);
 
-  let nose = featureObjects.noses[Math.floor(Math.random() * (featureObjects.noses.length - 1))];
+  let nose = featureObjects.noses[Math.floor(Math.random() * (featureObjects.noses.length))];
   $("#nose").html(`<img src= "data:image/png;base64,${nose.base64}" alt=""/>`);
 
-  let mouth = featureObjects.mouths[Math.floor(Math.random() * (featureObjects.mouths.length - 1))];
+  let mouth = featureObjects.mouths[Math.floor(Math.random() * (featureObjects.mouths.length))];
   $("#mouth").html(`<img src= "data:image/png;base64,${mouth.base64}" alt=""/>`);
   $("body").css("user-select", "none")
   $("#face").css({
