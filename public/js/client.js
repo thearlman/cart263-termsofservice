@@ -88,7 +88,7 @@ function makeFace() {
   // cancelAnimationFrame(animate);
   // c.clearRect(window.innerWidth / 4, window.innerHeight / 4, window.innerWidth / 2, window.innerHeight / 2);
 
-  let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length - 1))];
+  let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length))];
   $("#leftEyebrow").html(`<img src= "data:image/png;base64,${leftEyebrow.base64}" alt=""/>`);
 
   let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length - 1))];
