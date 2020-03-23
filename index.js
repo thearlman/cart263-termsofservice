@@ -44,7 +44,7 @@ app.post('/datain', function(req, res) {
   fs.writeFile("userPackage.zip", req.body, function(err) {
     if (err) throw err;
     storeUsers(req, res);
-    // res.send("got it");
+    res.send("received");
   })
 })
 
