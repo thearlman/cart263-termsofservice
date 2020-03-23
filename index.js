@@ -81,38 +81,38 @@ function storeUsers() {
             dataCounter++
             break;
           case "faceDetails/claData.json":
-            entry.pipe(fs.createWriteStream(`userData/claData${uIndex.users.length}.json`));
-            tempUser.claData = `userData/rekData${uIndex.users.length}.json`
+            entry.pipe(fs.createWriteStream(`userData/claData_${uIndex.users.length}.json`));
+            tempUser.claData = `userData/rekData_${uIndex.users.length}.json`
             dataCounter++
             break;
           case "faceDetails/leftEyebrow.png":
-            entry.pipe(fs.createWriteStream(`userImages/leftEyebrows/leftEyebrow${uIndex.users.length}.png`));
-            tempUser.images.leftEyebrow = `userImages/leftEyebrows/leftEyebrow${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/leftEyebrows/leftEyebrow_${uIndex.users.length}.png`));
+            tempUser.images.leftEyebrow = `userImages/leftEyebrows/leftEyebrow_${uIndex.users.length}.png`;
             dataCounter++
             break;
           case "faceDetails/leftEye.png":
-            entry.pipe(fs.createWriteStream(`userImages/leftEyes/leftEye${uIndex.users.length}.png`));
-            tempUser.images.leftEye = `userImages/leftEyes/leftEye${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/leftEyes/leftEye_${uIndex.users.length}.png`));
+            tempUser.images.leftEye = `userImages/leftEyes/leftEye_${uIndex.users.length}.png`;
             dataCounter++
             break;
           case "faceDetails/rightEyebrow.png":
-            entry.pipe(fs.createWriteStream(`userImages/rightEyebrows/rightEyebrow${uIndex.users.length}.png`));
-            tempUser.images.rightEyebrow = `userImages/rightEyebrows/rightEyebrow${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/rightEyebrows/rightEyebrow_${uIndex.users.length}.png`));
+            tempUser.images.rightEyebrow = `userImages/rightEyebrows/rightEyebrow_${uIndex.users.length}.png`;
             dataCounter++
             break;fixing
           case "faceDetails/rightEye.png":
-            entry.pipe(fs.createWriteStream(`userImages/rightEyes/rightEye${uIndex.users.length}.png`));
-            tempUser.images.rightEye = `userImages/rightEyes/rightEye${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/rightEyes/rightEye_${uIndex.users.length}.png`));
+            tempUser.images.rightEye = `userImages/rightEyes/rightEye_${uIndex.users.length}.png`;
             dataCounter++
             break;
           case "faceDetails/nose.png":
-            entry.pipe(fs.createWriteStream(`userImages/noses/nose${uIndex.users.length}.png`));
-            tempUser.images.nose = `userImages/noses/nose${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/noses/nose_${uIndex.users.length}.png`));
+            tempUser.images.nose = `userImages/noses/nose_${uIndex.users.length}.png`;
             dataCounter++
             break;
           case "faceDetails/mouth.png":
-            entry.pipe(fs.createWriteStream(`userImages/mouths/mouth${uIndex.users.length}.png`));
-            tempUser.images.mouth = `userImages/mouths/mouth${uIndex.users.length}.png`;
+            entry.pipe(fs.createWriteStream(`userImages/mouths/mouth_${uIndex.users.length}.png`));
+            tempUser.images.mouth = `userImages/mouths/mouth_${uIndex.users.length}.png`;
             dataCounter++
             break;
           default:
