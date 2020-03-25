@@ -60,7 +60,7 @@ function createImageObjects() {
       let base64 = userData.images[featureType][e];
       let newFeature = new FeatureImage(featureType, base64);
       featureObject[featureType].push(newFeature);
-      let demographicData = userData.demographics[i];
+      let demographicData = userData.demographics[e];
       let demographicString = "";
       for (let o = 0; o < Object.keys(demographicData).length; o++) {
         let demographic = Object.keys(demographicData)[o];
