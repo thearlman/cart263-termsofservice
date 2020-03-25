@@ -17,9 +17,6 @@ let container;
 let network;
 let options = {};
 
-
-
-
 window.onload = function() {
   let clientSocket = io();
   clientSocket.on("handshake", function(message) {
@@ -51,6 +48,10 @@ function refreshImages() {
 }
 
 function createImageObjects() {
+  nodes = [];
+  edges = [];
+  options = {};
+  data = {};
   resetFeatureObjects()
   let featureId = 0;
   for (let i = 0; i < Object.keys(imageData).length; i++) {
@@ -80,7 +81,7 @@ function createImageObjects() {
     // onInitialDrawComplete: makeFace
   };
   network = new vis.Network(container, data, options);
-  // makeFace();
+  makeFace();
 }
 
 
