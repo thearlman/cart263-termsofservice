@@ -11,6 +11,12 @@ let featureObjects = {
   mouths: []
 }
 
+let nodes = [];
+let edges = [];
+let container;
+let network;
+let options = {};
+
 
 
 
@@ -23,17 +29,11 @@ window.onload = function() {
   clientSocket.on("newData", function(message) {
     refreshImages();
   });
-
-  canvas = document.getElementById("canvas");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  c = canvas.getContext("2d");
   console.log("running");
   refreshImages();
 }
 
-$(document).on("click", makeFace);
-$(document).on("touchend", makeFace);
+$(document).dblclick(makeFace);
 
 function refreshImages() {
   $.ajax({
@@ -50,67 +50,64 @@ function refreshImages() {
   })
 }
 
-
-
-
 function createImageObjects() {
   resetFeatureObjects()
+  let featureId = 0;
   for (let i = 0; i < Object.keys(imageData).length; i++) {
     let featureType = Object.keys(imageData)[i];
     for (var e = 0; e < imageData[featureType].length; e++) {
       let base64 = imageData[featureType][e];
       let newFeature = new FeatureImage(featureType, base64);
       featureObjects[featureType].push(newFeature);
+      nodes.push({
+        id: featureId,
+        image: `data:image/png;base64,${base64}`,
+        shape: "image"
+      });
+      edges.push({ from: featureId, to: featureId+1,});
+      featureId++;
     }
   }
-  animate = window.requestAnimationFrame(draw);
-  makeFace();
-}
-
-
-function draw() {
-  c.clearRect(0, 0, window.innerWidth, window.innerHeight)
-  updateImageLocations();
-  // animate = window.requestAnimationFrame(draw);
-}
-
-function updateImageLocations() {
-  for (let i = 0; i < Object.keys(featureObjects).length; i++) {
-    let featureType = Object.keys(featureObjects)[i];
-    for (let e = 0; e < featureObjects[featureType].length; e++) {
-      let obj = featureObjects[featureType][e];
-      obj.drift();
-      c.drawImage(obj.image, obj.x, obj.y);
+  container = document.getElementById('canvas');
+  data = {
+    nodes: nodes,
+    edges: edges
+  };
+  options = {
+    interaction: {
+      dragView: false
     }
-  }
+    // onInitialDrawComplete: makeFace
+  };
+  network = new vis.Network(container, data, options);
+  // makeFace();
 }
+
+
 
 function makeFace() {
-  // cancelAnimationFrame(animate);
-  // c.clearRect(window.innerWidth / 4, window.innerHeight / 4, window.innerWidth / 2, window.innerHeight / 2);
 
-  let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length))];
+  let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length - 1))];
   $("#leftEyebrow").html(`<img src= "data:image/png;base64,${leftEyebrow.base64}" alt=""/>`);
 
-  let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length))];
+  let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length - 1))];
   $("#rightEyebrow").html(`<img src= "data:image/png;base64,${rightEyebrow.base64}" alt=""/>`);
 
-  let leftEye = featureObjects.leftEyes[Math.floor(Math.random() * (featureObjects.leftEyes.length))];
+  let leftEye = featureObjects.leftEyes[Math.floor(Math.random() * (featureObjects.leftEyes.length - 1))];
   $("#leftEye").html(`<img src= "data:image/png;base64,${leftEye.base64}" alt=""/>`);
 
-  let rightEye = featureObjects.rightEyes[Math.floor(Math.random() * (featureObjects.rightEyes.length))];
+  let rightEye = featureObjects.rightEyes[Math.floor(Math.random() * (featureObjects.rightEyes.length - 1))];
   $("#rightEye").html(`<img src= "data:image/png;base64,${rightEye.base64}" alt=""/>`);
 
-  let nose = featureObjects.noses[Math.floor(Math.random() * (featureObjects.noses.length))];
+  let nose = featureObjects.noses[Math.floor(Math.random() * (featureObjects.noses.length - 1))];
   $("#nose").html(`<img src= "data:image/png;base64,${nose.base64}" alt=""/>`);
 
-  let mouth = featureObjects.mouths[Math.floor(Math.random() * (featureObjects.mouths.length))];
+  let mouth = featureObjects.mouths[Math.floor(Math.random() * (featureObjects.mouths.length - 1))];
   $("#mouth").html(`<img src= "data:image/png;base64,${mouth.base64}" alt=""/>`);
   $("body").css("user-select", "none")
   $("#face").css({
     width: "50vw"
   });
-
   setTimeout(() => {
     $("#face").css({
       width: "0vw"
@@ -126,12 +123,8 @@ class FeatureImage {
     this.base64 = base64;
     this.image = new Image();
     this.image.src = `data:image/png;base64,${base64}`
-    this.x = Math.floor(Math.random() * $("#canvas").width() - 100);
-    this.y = Math.floor(Math.random() * $("#canvas").height() - 100);
-  }
-  drift() {
-    this.x += (Math.random() * 1) + (Math.random() * -1);
-    this.y += (Math.random() * 1) + (Math.random() * -1);
+    this.width = this.image.width;
+    this.height = this.image.height;
   }
 }
 
