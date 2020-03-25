@@ -82,7 +82,7 @@ function storeUsers() {
             break;
           case "faceDetails/claData.json":
             entry.pipe(fs.createWriteStream(`userData/claData_${uIndex.users.length}.json`));
-            tempUser.claData = `userData/rekData_${uIndex.users.length}.json`
+            tempUser.claData = `userData/claData_${uIndex.users.length}.json`
             dataCounter++
             break;
           case "faceDetails/leftEyebrow.png":
@@ -136,27 +136,49 @@ function storeUsers() {
 }
 
 function dataDump(req, res) {
-  let images = {
-    "mouths":[],
-    "leftEyes": [],
-    "rightEyes": [],
-    "noses": [],
-    "rightEyebrows": [],
-    "leftEyebrows": []
+  let userData = {
+    images: {
+      "mouths": [],
+      "leftEyes": [],
+      "rightEyes": [],
+      "noses": [],
+      "rightEyebrows": [],
+      "leftEyebrows": [],
+    },
+    "demographics": []
   };
   fs.readFile('userIndex.json', function(err, data) {
     if (err) throw err;
-    uIndex = JSON.parse(data);
-    for (let i = 0; i < uIndex.users.length; i++){
-      images.mouths.push(base64Encode(uIndex.users[i].images.mouth));
-      images.leftEyes.push(base64Encode(uIndex.users[i].images.leftEye));
-      images.rightEyes.push(base64Encode(uIndex.users[i].images.rightEye));
-      images.noses.push(base64Encode(uIndex.users[i].images.nose));
-      images.rightEyebrows.push(base64Encode(uIndex.users[i].images.rightEyebrow));
-      images.leftEyebrows.push(base64Encode(uIndex.users[i].images.leftEyebrow));
+    let uIndex = JSON.parse(data);
+    for (let i = 0; i < uIndex.users.length; i++) {
+      userData.images.mouths.push(base64Encode(uIndex.users[i].images.mouth));
+      userData.images.leftEyes.push(base64Encode(uIndex.users[i].images.leftEye));
+      userData.images.rightEyes.push(base64Encode(uIndex.users[i].images.rightEye));
+      userData.images.noses.push(base64Encode(uIndex.users[i].images.nose));
+      userData.images.rightEyebrows.push(base64Encode(uIndex.users[i].images.rightEyebrow));
+      userData.images.leftEyebrows.push(base64Encode(uIndex.users[i].images.leftEyebrow));
     }
-    res.send(images);
+    packageDemographics(res, userData, uIndex)
   })
+}
+
+function packageDemographics(res, userData, uIndex) {
+  let dataCount = 0;
+  for (let i = 0; i < uIndex.users.length; i++) {
+    fs.readFile(uIndex.users[i].claData, function(err, data) {
+      if (err) throw err;
+      let claData = JSON.parse(data);
+      let raceInfo = claData.outputs[0].data.regions[0].data.face.multicultural_appearance.concepts;
+      userData.demographics.push({})
+      for (let e = 0; e < raceInfo.length; e++) {
+        userData.demographics[i][raceInfo[e].name] = raceInfo[e].value;
+      }
+      dataCount++
+      if (dataCount >= uIndex.users.length) {
+        res.send(userData);
+      }
+    })
+  }
 }
 
 function base64Encode(url) {

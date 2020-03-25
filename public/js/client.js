@@ -2,7 +2,7 @@ let canvas;
 let c;
 let animate;
 let imageData;
-let featureObjects = {
+let featureObject = {
   leftEyebrows: [],
   rightEyebrows: [],
   leftEyes: [],
@@ -37,7 +37,7 @@ function refreshImages() {
     type: "GET",
     url: "/requestData",
     success: (data) => {
-      imageData = data;
+      userData = data;
       createImageObjects();
       console.log("Images Updated");
     },
@@ -52,20 +52,30 @@ function createImageObjects() {
   edges = [];
   options = {};
   data = {};
-  resetFeatureObjects()
+  resetfeatureObject()
   let featureId = 0;
-  for (let i = 0; i < Object.keys(imageData).length; i++) {
-    let featureType = Object.keys(imageData)[i];
-    for (var e = 0; e < imageData[featureType].length; e++) {
-      let base64 = imageData[featureType][e];
+  for (let i = 0; i < Object.keys(userData.images).length; i++) {
+    let featureType = Object.keys(userData.images)[i];
+    for (var e = 0; e < userData.images[featureType].length; e++) {
+      let base64 = userData.images[featureType][e];
       let newFeature = new FeatureImage(featureType, base64);
-      featureObjects[featureType].push(newFeature);
+      featureObject[featureType].push(newFeature);
+      let demographicData = userData.demographics[i];
+      let demographicString = "";
+      for (let o = 0; o < Object.keys(demographicData).length; o++) {
+        let demographic = Object.keys(demographicData)[o];
+        demographicString += `${demographic}:<br />${demographicData[demographic]} <br />`;
+      }
       nodes.push({
         id: featureId,
+        title: demographicString,
         image: `data:image/png;base64,${base64}`,
         shape: "image"
       });
-      edges.push({ from: featureId, to: featureId+1,});
+      edges.push({
+        from: e,
+        to: featureId
+      });
       featureId++;
     }
   }
@@ -76,11 +86,15 @@ function createImageObjects() {
   };
   options = {
     interaction: {
+      hover: true,
       dragView: false
+    },
+    edges: {
     }
-    // onInitialDrawComplete: makeFace
   };
   network = new vis.Network(container, data, options);
+  network.on("hoverNode", function(node) {
+  })
   makeFace();
 }
 
@@ -88,22 +102,22 @@ function createImageObjects() {
 
 function makeFace() {
 
-  let leftEyebrow = featureObjects.leftEyebrows[Math.floor(Math.random() * (featureObjects.leftEyebrows.length - 1))];
+  let leftEyebrow = featureObject.leftEyebrows[Math.floor(Math.random() * (featureObject.leftEyebrows.length - 1))];
   $("#leftEyebrow").html(`<img src= "data:image/png;base64,${leftEyebrow.base64}" alt=""/>`);
 
-  let rightEyebrow = featureObjects.rightEyebrows[Math.floor(Math.random() * (featureObjects.rightEyebrows.length - 1))];
+  let rightEyebrow = featureObject.rightEyebrows[Math.floor(Math.random() * (featureObject.rightEyebrows.length - 1))];
   $("#rightEyebrow").html(`<img src= "data:image/png;base64,${rightEyebrow.base64}" alt=""/>`);
 
-  let leftEye = featureObjects.leftEyes[Math.floor(Math.random() * (featureObjects.leftEyes.length - 1))];
+  let leftEye = featureObject.leftEyes[Math.floor(Math.random() * (featureObject.leftEyes.length - 1))];
   $("#leftEye").html(`<img src= "data:image/png;base64,${leftEye.base64}" alt=""/>`);
 
-  let rightEye = featureObjects.rightEyes[Math.floor(Math.random() * (featureObjects.rightEyes.length - 1))];
+  let rightEye = featureObject.rightEyes[Math.floor(Math.random() * (featureObject.rightEyes.length - 1))];
   $("#rightEye").html(`<img src= "data:image/png;base64,${rightEye.base64}" alt=""/>`);
 
-  let nose = featureObjects.noses[Math.floor(Math.random() * (featureObjects.noses.length - 1))];
+  let nose = featureObject.noses[Math.floor(Math.random() * (featureObject.noses.length - 1))];
   $("#nose").html(`<img src= "data:image/png;base64,${nose.base64}" alt=""/>`);
 
-  let mouth = featureObjects.mouths[Math.floor(Math.random() * (featureObjects.mouths.length - 1))];
+  let mouth = featureObject.mouths[Math.floor(Math.random() * (featureObject.mouths.length - 1))];
   $("#mouth").html(`<img src= "data:image/png;base64,${mouth.base64}" alt=""/>`);
   $("body").css("user-select", "none")
   $("#face").css({
@@ -129,8 +143,8 @@ class FeatureImage {
   }
 }
 
-function resetFeatureObjects() {
-  featureObjects = {
+function resetfeatureObject() {
+  featureObject = {
     leftEyebrows: [],
     rightEyebrows: [],
     leftEyes: [],
