@@ -8,6 +8,7 @@
 //kiosk, images of which may be seen here: INSTER url
 //
 
+//testComment
 
 //template for the object to hold the different parts of the faces
 let featureObject = {
