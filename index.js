@@ -219,7 +219,6 @@ function packageDemographics(res, userData, uIndex) {
     //read in the corresponding clarifai json file (url is stored in the userIndex, file in seperate directory)
     //spits out json as var=>data
     fs.readFile(uIndex.users[i].claData, function(err, data) {
-      console.log(i);
       if (err) throw err;
       //parse'n'store
       let claData = JSON.parse(data);
